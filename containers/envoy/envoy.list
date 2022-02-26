@@ -1,0 +1,2 @@
+deb [arch=amd64] https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
+deb-src [arch=amd64] https://deb.dl.getenvoy.io/public/deb/ubuntu focal main
