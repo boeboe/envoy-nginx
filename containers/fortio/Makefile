@@ -33,10 +33,10 @@ build: ## Build the container
 	docker build ${BUILD_ARGS} --no-cache -t $(DOCKER_ACCOUNT)/${IMAGE_NAME} .
 
 run: ## Run container
-	docker run -it --rm -p=8078:8078 -p=8079:8079 -p=8080:8080 -p=8081:8081 -v $(shell pwd)/results:/var/lib/fortio --name="$(CONTAINER_NAME)" $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
+	docker run -it --rm -p=8078:8078 -p=8079:8079 -p=8080:8080 -p=8081:8081 -v $(shell pwd)/results:/var/lib/fortio --name=$(CONTAINER_NAME) $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
 
 shell: ## Run shell in container
-	docker run -it --rm -p=8078:8078 -p=8079:8079 -p=8080:8080 -p=8081:8081 -v $(shell pwd)/results:/var/lib/fortio --name="$(CONTAINER_NAME)" --entrypoint=/bin/bash $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
+	docker run -it --rm -p=8078:8078 -p=8079:8079 -p=8080:8080 -p=8081:8081 -v $(shell pwd)/results:/var/lib/fortio --name=$(CONTAINER_NAME) --entrypoint=/bin/bash $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
 
 stop: ## Stop and remove a running container
 	docker stop $(CONTAINER_NAME) || true
@@ -47,3 +47,4 @@ publish: ## Tag and publish container
 	docker push $(DOCKER_ACCOUNT)/${IMAGE_NAME}:${BUILD_VERSION}
 
 release: build publish ## Make a full release
+	@echo "Check released tags on https://hub.docker.com/r/$(DOCKER_ACCOUNT)/${IMAGE_NAME}/tags"
