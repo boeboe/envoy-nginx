@@ -33,10 +33,10 @@ build: ## Build the container
 	docker build ${BUILD_ARGS} --no-cache -t $(DOCKER_ACCOUNT)/${IMAGE_NAME} .
 
 run: ## Run container
-	docker run -it --rm -p=8080:80 -v type=bind,source=$(shell pwd)/conf.d,target=/etc/envoy/conf.d --name=$(CONTAINER_NAME) $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
+	docker run -it --rm -p=8080:80 -v type=bind,source=$(shell pwd)/config,target=/etc/envoy --name=$(CONTAINER_NAME) $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
 
 shell: ## Run shell in container
-	docker run -it --rm -p=8080:80 -v type=bind,source=$(shell pwd)/conf.d,target=/etc/envoy/conf.d --name=$(CONTAINER_NAME) --entrypoint=/bin/bash $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
+	docker run -it --rm -p=8080:80 -v type=bind,source=$(shell pwd)/config,target=/etc/envoy --name=$(CONTAINER_NAME) --entrypoint=/bin/bash $(DOCKER_ACCOUNT)/$(IMAGE_NAME)
 
 stop: ## Stop and remove a running container
 	docker stop $(CONTAINER_NAME) || true

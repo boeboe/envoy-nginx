@@ -32,13 +32,14 @@ RUN curl -sL https://nginx.org/keys/nginx_signing.key | apt-key add - \
     && apt update -y \
     && apt install nginx=${NGINX_VERSION}~focal -y \
     && rm -rf /var/lib/apt/lists/* \
-    && rm /etc/nginx/conf.d/default.conf
+    && rm -rf /etc/nginx/*
 
-ADD conf.d/default.conf /etc/nginx/conf.d/default.conf
+ADD config/nginx.conf /etc/nginx/nginx.conf
+ADD entrypoint.sh /usr/local/bin
 
 EXPOSE 80
-VOLUME [ "/etc/nginx/conf.d" ]
+VOLUME [ "/etc/nginx" ]
 
 STOPSIGNAL SIGTERM
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["entrypoint.sh"]

@@ -34,11 +34,12 @@ RUN curl -sL https://deb.dl.getenvoy.io/public/gpg.8115BA8E629CC074.key | apt-ke
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /etc/envoy/conf.d
 
-ADD conf.d/default.yaml /etc/envoy/conf.d/default.yaml
+ADD config/envoy.yaml /etc/envoy/envoy.yaml
+ADD entrypoint.sh /usr/local/bin
 
 EXPOSE 80
-VOLUME [ "/etc/envoy/conf.d" ]
+VOLUME [ "/etc/envoy" ]
 
 STOPSIGNAL SIGTERM
 
-CMD ["envoy", "-c", "/etc/envoy/conf.d/default.yaml"]
+CMD ["entrypoint.sh"]
